@@ -1,0 +1,116 @@
+# Prompt Storage MCP Server
+
+A personal prompt template library that integrates with GitHub Copilot in Visual Studio via the Model Context Protocol (MCP).
+
+## How It Works
+
+```
+You ask Copilot ──► Copilot reads your MCP tools ──► Calls list_prompts / get_prompt
+       │                                                        │
+       │                    ◄───── Returns your template ◄──────┘
+       │
+       ▼
+Copilot generates code following YOUR patterns
+```
+
+## Setup in Visual Studio
+
+### 1. Build the project
+
+```bash
+dotnet build PromptStorageMcp
+dotnet publish PromptStorageMcp -c Release
+```
+
+### 2. Register as MCP Server in Visual Studio
+
+Go to **Tools → Options → GitHub Copilot → MCP Servers** (or **Copilot → Edit MCP Servers**) and add:
+
+```json
+{
+  "servers": {
+    "prompt-storage": {
+      "type": "stdio",
+      "command": "dotnet",
+      "args": [
+        "C:\\FULL\\PATH\\TO\\PromptStorageMcp\\bin\\Release\\net10.0\\PromptStorageMcp.dll"
+      ]
+    }
+  }
+}
+```
+
+> ⚠️ Replace the path with your actual publish path.
+
+### 3. Enable Agent Mode
+
+In Copilot Chat, switch to **Agent Mode** (toggle at the top of the chat panel). This allows Copilot to automatically discover and call your MCP tools.
+
+### 4. Test it
+
+In Copilot Chat (Agent Mode), type:
+
+> "Create unit tests for my OrderService class"
+
+Copilot should automatically call `list_prompts` or `get_prompt_for_task`, find your `unit-tests` template, and generate tests following your exact patterns.
+
+## Available Tools
+
+| Tool | Description |
+|------|-------------|
+| `list_prompts` | Lists all prompt templates with names, descriptions, and tags |
+| `get_prompt` | Retrieves the full content of a specific prompt by name |
+| `search_prompts` | Searches prompts by keyword across names, descriptions, and tags |
+| `get_prompt_for_task` | Finds the best matching prompt for a given coding task description |
+
+## Adding New Prompts
+
+Just create a new `.md` file in the `Prompts/` folder with this format:
+
+```markdown
+---
+name: my-new-prompt
+description: What this prompt does (keep it clear for Copilot to understand)
+tags: keyword1, keyword2, keyword3
+---
+
+# Your Prompt Title
+
+## Rules
+- Rule 1
+- Rule 2
+
+## Examples
+...your examples here...
+```
+
+Then rebuild the project. That's it — Copilot will discover it automatically!
+
+## Existing Prompt Templates
+
+| Prompt | Description |
+|--------|-------------|
+| `unit-tests` | xUnit + FluentAssertions with AAA pattern |
+| `api-endpoints` | ASP.NET Core Minimal APIs with validation |
+| `code-review` | Comprehensive code review checklist |
+| `documentation` | XML docs and README generation rules |
+| `refactoring` | Clean code and SOLID refactoring patterns |
+
+## Project Structure
+
+```
+PromptStorageMcp/
+├── Program.cs                  # MCP server entry point (stdio transport)
+├── Models/
+│   └── PromptInfo.cs           # Prompt metadata model
+├── Services/
+│   └── PromptService.cs        # Reads and parses .md files
+├── Tools/
+│   └── PromptTools.cs          # MCP tools exposed to Copilot
+└── Prompts/                    # Your prompt templates (add .md files here)
+    ├── unit-tests.md
+    ├── api-endpoints.md
+    ├── code-review.md
+    ├── documentation.md
+    └── refactoring.md
+```
