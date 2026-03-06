@@ -24,7 +24,9 @@ dotnet publish PromptStorageMcp -c Release
 
 ### 2. Register as MCP Server in Visual Studio
 
-Go to **Tools → Options → GitHub Copilot → MCP Servers** (or **Copilot → Edit MCP Servers**) and add:
+Create a file called **`mcp.json`** inside the **`.vs`** folder at the root of your solution directory. If the `.vs` folder doesn't exist, create it.
+
+**File to create:** `<your-solution-root>\.vs\mcp.json`
 
 ```json
 {
@@ -40,7 +42,17 @@ Go to **Tools → Options → GitHub Copilot → MCP Servers** (or **Copilot →
 }
 ```
 
-> ⚠️ Replace the path with your actual publish path.
+> ⚠️ Replace the path with your actual full path to the published DLL.
+
+#### Alternative config locations
+
+| File location | Scope |
+|---------------|-------|
+| **`.vs\mcp.json`** | Current solution only **(recommended)** |
+| `.vscode\mcp.json` | Current solution (also read by Visual Studio) |
+| `%USERPROFILE%\.config\GitHub Copilot\mcp.json` | All solutions globally |
+
+After creating the file, **close and reopen the solution** so Visual Studio picks up the new MCP server.
 
 ### 3. Enable Agent Mode
 
