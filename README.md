@@ -66,9 +66,9 @@ After creating the file, **close and reopen the solution** so Visual Studio pick
 
 In Copilot Chat (Agent Mode), type:
 
-> "Create unit tests for my OrderService class"
+> "list_prompts"
 
-Copilot should automatically call `list_prompts` or `get_prompt_for_task`, find your `unit-tests` template, and generate tests following your exact patterns.
+The agent should call the `list_prompts` tool and return a list of all your available prompt templates with their names, descriptions, and tags.
 
 ## Available Tools
 
