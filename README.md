@@ -66,7 +66,7 @@ After creating the file, **close and reopen the solution** so Visual Studio pick
 
 In Copilot Chat (Agent Mode), type:
 
-> "list_prompts"
+> "use your mcp tools" and autorize it.
 
 The agent should call the `list_prompts` tool and return a list of all your available prompt templates with their names, descriptions, and tags.
 
