@@ -54,9 +54,13 @@ Create a file called **`mcp.json`** inside the **`.vs`** folder at the root of y
 
 After creating the file, **close and reopen the solution** so Visual Studio picks up the new MCP server.
 
-### 3. Enable Agent Mode
+### 3. Enable Agent Mode and Activate the MCP Server
 
-In Copilot Chat, switch to **Agent Mode** (toggle at the top of the chat panel). This allows Copilot to automatically discover and call your MCP tools.
+1. In Copilot Chat, switch to **Agent Mode** (toggle at the top of the chat panel).
+2. Click the **🔧 tools icon** on the right side of the send message bar (next to the send button).
+3. In the tools list, find **prompt-storage** and **check the box** to enable it.
+
+> This allows Copilot to automatically discover and call your MCP tools.
 
 ### 4. Test it
 
